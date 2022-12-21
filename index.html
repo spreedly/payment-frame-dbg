@@ -100,7 +100,7 @@
 
     <button onclick="printBody()">Show Source</button>
 
-    <textarea id="debugger" cols="100" rows="10"></textarea>
+    <textarea id="debugger" cols="100" rows="20"></textarea>
 
   </form>
 
@@ -120,7 +120,7 @@
       let ua = window.navigator.userAgent;
       let debuggerPanel = document.getElementById("debugger");
       let curr = debuggerPanel.innerHTML;
-      debuggerPanel.innerHTML = curr + message+'\n';
+      debuggerPanel.innerHTML = curr + message + `(object? ${message === "object"})` + '\n';
       console.log(message);
 
       // too much noise
@@ -139,6 +139,12 @@
     window.addEventListener("message", (event) => {
       spreedlyDbg(event.data)
     }, false);
+
+    document.addEventListener("securitypolicyviolation", (e) => {
+      spreedlyDbg(`e.blockedURI: ${e.blockedURI}`);    
+      spreedlyDbg(`e.violatedDirective: ${e.violatedDirective}`);    
+      spreedlyDbg(`e.originalPolicy: ${e.originalPolicy}`);
+    });
     
     Spreedly.init();
 
