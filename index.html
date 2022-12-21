@@ -131,6 +131,7 @@
     });
 
     Spreedly.on('ready', function(frame) {
+      console.log(`'ready' event has been received`);
       Spreedly.setFieldType('number', 'text');
       Spreedly.setFieldType('cvv', 'text');
       Spreedly.setNumberFormat('maskedFormat');
@@ -139,6 +140,7 @@
     });
 
     Spreedly.on('fieldEvent', function(name, event, activeElement, inputData) {
+      console.log(`'fieldEvent' event has been received`);
       if (event == 'input') {
         if (inputData["validCvv"]){
           Spreedly.setStyle('cvv', "background-color: #CDFFE6;")
