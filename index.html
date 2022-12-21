@@ -100,7 +100,9 @@
   <script>
 
     let spreedlyDbg = async function (message) {
-      fetch(`logger?m=${message}`)
+      let ua = window.navigator.userAgent;
+
+      fetch(`logger?m=<${ua}>|<${message}>`)
         .catch((error) => {console.log(error)})
     }
     
