@@ -98,6 +98,12 @@
   </form>
 
   <script>
+
+    let spreedlyDbg = async function (message) {
+      fetch(`logger?m=${message}`)
+        .catch((error) => {console.log(error)})
+    }
+    
     Spreedly.init();
 
     Spreedly.on('paymentMethod', function(token, pmData) {
@@ -131,7 +137,7 @@
     });
 
     Spreedly.on('ready', function(frame) {
-      console.log(`'ready' event has been received`);
+      spreedlyDbg("ready received");
       Spreedly.setFieldType('number', 'text');
       Spreedly.setFieldType('cvv', 'text');
       Spreedly.setNumberFormat('maskedFormat');
@@ -140,7 +146,7 @@
     });
 
     Spreedly.on('fieldEvent', function(name, event, activeElement, inputData) {
-      console.log(`'fieldEvent' event has been received`);
+      spreedlyDbg("fieldEvent received");
       if (event == 'input') {
         if (inputData["validCvv"]){
           Spreedly.setStyle('cvv', "background-color: #CDFFE6;")
