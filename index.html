@@ -96,12 +96,17 @@
       data-cvv-id="spreedly-cvv-test">
     </script>
 
+    <button onclick="refreshPage()">Refresh</button>
+
     <textarea id="debugger" cols="100" rows="10"></textarea>
 
   </form>
 
   <script>
 
+    let refreshPage = function(){
+      location.href = `/?refresh=${new Date().getMilliseconds()}`
+    }
 
     let spreedlyDbg = function (message) {
       let ua = window.navigator.userAgent;
