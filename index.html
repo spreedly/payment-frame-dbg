@@ -95,19 +95,24 @@
       data-number-id="spreedly-number-test"
       data-cvv-id="spreedly-cvv-test">
     </script>
+
+    <textarea id="debugger" cols="100" rows="10"></textarea>
+
   </form>
 
   <script>
 
 
-    let spreedlyDbg = async function (message) {
-    let ua = window.navigator.userAgent;
+    let spreedlyDbg = function (message) {
+      let ua = window.navigator.userAgent;
+      let debuggerPanel = document.getElementById("debugger");
+      let curr = debuggerPanel.innerHTML;
+      debuggerPanel.innerHTML = curr + message+'\n';
 
-    fetch(`logger?m=<${ua}>|<${message}>`)
-        .catch((error) => {
-          console.log(error);
-          alert(error);
-        })
+      fetch(`logger?m=<${ua}>|<${message}>`)
+          .catch((error) => {
+            console.log(error);
+          })
     }
 
     spreedlyDbg("App ready to init Spreedly.");
