@@ -114,13 +114,21 @@
       let curr = debuggerPanel.innerHTML;
       debuggerPanel.innerHTML = curr + message+'\n';
 
-      fetch(`logger?m=<${ua}>|<${message}>`)
-          .catch((error) => {
-            console.log(error);
-          })
+      // too much noise
+      // fetch(`logger?m=<${ua}>|<${message}>`)
+      //     .catch((error) => {
+      //       console.log(error);
+      //     })
     }
 
+    // as per https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage
+    spreedlyDbg(`crossOriginIsolated = ${window.crossOriginIsolated}`);
+
     spreedlyDbg("App ready to init Spreedly.");
+
+    window.addEventListener("message", (event) => {
+      spreedlyDbg(event.data)
+    }, false);
     
     Spreedly.init();
 
