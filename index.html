@@ -133,7 +133,8 @@
     // as per https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage
     spreedlyDbg(`crossOriginIsolated = ${window.crossOriginIsolated}`);
     
-    spreedlyDbg("App ready to init Spreedly.");
+    spreedlyDbg(`App ready to init Spreedly.`);
+    spreedlyDbg(`Running inside another frame? ${window.self !== window.top}`)
 
     window.addEventListener("message", (event) => {
       spreedlyDbg(event.data)
