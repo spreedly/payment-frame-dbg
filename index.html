@@ -98,6 +98,8 @@
 
     <button onclick="refreshPage()">Refresh</button>
 
+    <button onclick="printBody()">Show Source</button>
+
     <textarea id="debugger" cols="100" rows="10"></textarea>
 
   </form>
@@ -108,11 +110,18 @@
       location.href = `/?refresh=${new Date().getMilliseconds()}`
     }
 
+    let printBody = function(){
+      let debuggerPanel = document.getElementById("debugger");
+      let curr = debuggerPanel.innerHTML;
+      debuggerPanel.innerHTML = document.getElementsByTagName('html')[0].innerHTML;
+    }
+
     let spreedlyDbg = function (message) {
       let ua = window.navigator.userAgent;
       let debuggerPanel = document.getElementById("debugger");
       let curr = debuggerPanel.innerHTML;
       debuggerPanel.innerHTML = curr + message+'\n';
+      console.log(message);
 
       // too much noise
       // fetch(`logger?m=<${ua}>|<${message}>`)
@@ -123,7 +132,7 @@
 
     // as per https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage
     spreedlyDbg(`crossOriginIsolated = ${window.crossOriginIsolated}`);
-
+    
     spreedlyDbg("App ready to init Spreedly.");
 
     window.addEventListener("message", (event) => {
