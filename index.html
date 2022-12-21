@@ -99,12 +99,18 @@
 
   <script>
 
-    let spreedlyDbg = async function (message) {
-      let ua = window.navigator.userAgent;
 
-      fetch(`logger?m=<${ua}>|<${message}>`)
-        .catch((error) => {console.log(error)})
+    let spreedlyDbg = async function (message) {
+    let ua = window.navigator.userAgent;
+
+    fetch(`logger?m=<${ua}>|<${message}>`)
+        .catch((error) => {
+          console.log(error);
+          alert(error);
+        })
     }
+
+    spreedlyDbg("App ready to init Spreedly.");
     
     Spreedly.init();
 
@@ -122,6 +128,7 @@
     });
 
     Spreedly.on('errors', function(errors) {
+      spreedlyDbg(`EVT:'errors': ${errors}`);
       var messageEl = document.getElementById('errors');
       var errorBorder = "1px solid red";
       for(var i = 0; i < errors.length; i++) {
@@ -139,7 +146,7 @@
     });
 
     Spreedly.on('ready', function(frame) {
-      spreedlyDbg("ready received");
+      spreedlyDbg("EVT:'ready' received");
       Spreedly.setFieldType('number', 'text');
       Spreedly.setFieldType('cvv', 'text');
       Spreedly.setNumberFormat('maskedFormat');
@@ -148,7 +155,7 @@
     });
 
     Spreedly.on('fieldEvent', function(name, event, activeElement, inputData) {
-      spreedlyDbg("fieldEvent received");
+      spreedlyDbg("EVT:'fieldEvent' received");
       if (event == 'input') {
         if (inputData["validCvv"]){
           Spreedly.setStyle('cvv', "background-color: #CDFFE6;")
